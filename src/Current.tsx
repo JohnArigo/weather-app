@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SelectedDateType } from "./App";
 import { RootConfig } from "./CurrenWeatherConfig";
 import humidity from "./images/humidity.png";
 import wind from "./images/wind.png";
+import { WeatherBackground } from "./WeatherBackground";
+import { FindWeatherIcon } from "./FindWeatherImage";
 
 export type WeatherConfiguration = {
   currentWeather?: RootConfig;
@@ -14,9 +16,11 @@ export default function Current({
   selectedDate,
 }: WeatherConfiguration) {
   // <h1 className="">{currentWeather?.name}</h1>
+  const weatherDescription = currentWeather?.weather[0].id;
+  const DateSelected = new Date();
   return (
-    <body role="container" className=" flex flex-col">
-      <body className="w-96 h-44 flex flex-row flex-wrap self-center justify-between rounded-xl shadow-md">
+    <body role="container" className=" flex flex-col text-gray-50">
+      <body className={WeatherBackground({ DateSelected, weatherDescription })}>
         <main className="flex flex-row justify-between ml-1 w-7/12 h-full items-end ">
           <section className="flex flex-col mt-4">
             <div className="flex flex-col">
@@ -35,18 +39,29 @@ export default function Current({
             </div>
           </section>
           <section className="flex flex-row h-full items-end mb-3">
-            <div className="mr-2  flex flex-row items-center">
-              {Math.round(currentWeather?.main.humidity!)}
-              <img src={humidity} className="w-3 h-3" />
+            <div className="mr-3  flex flex-row items-center">
+              <div className="mr-1">
+                {Math.round(currentWeather?.main.humidity!)}
+              </div>
+              <div>
+                <img src={humidity} className="w-3 h-3" />
+              </div>
             </div>
             <div className="flex flex-row items-center">
-              {Math.round(currentWeather?.wind.speed!)}
-              <img src={wind} className="w-3 h-3" />
+              <div className="mr-1">
+                {Math.round(currentWeather?.wind.speed!)}
+              </div>
+              <div>
+                <img src={wind} className="w-3 h-3" />
+              </div>
             </div>
           </section>
         </main>
-        <section className="w-1/3 h-full flex flex-row">
-          Weather image here
+        <section className="w-1/3 h-full flex flex-row justify-end">
+          <img
+            className="w-24 h-24"
+            src={FindWeatherIcon({ DateSelected, weatherDescription })}
+          />
         </section>
       </body>
     </body>

@@ -16,11 +16,14 @@ export type SelectedDateType = {
 
 function App() {
   const dated = new Date();
+  const dateOne = dated.setDate(dated.getDate() + 1);
+  const initialDate = new Date(dateOne);
+  console.log(initialDate);
   const [selectedDate, setSelectedDate] = useState<SelectedDateType>({
-    dateSelected: dated,
+    dateSelected: initialDate,
     currentDateCheck: false,
   });
-  const [zipcode, setZipcode] = useState<number>(95687);
+  const [zipcode, setZipcode] = useState<number>(96706);
   const [weather, setWeather] = useState<WeatherConfigurationRoot>();
   const [currentWeather, setCurrentWeather] = useState<RootConfig>();
 
@@ -34,12 +37,13 @@ function App() {
   }, [selectedDate]);
 
   useEffect(() => {
-    fetch(
-      `https://api.openweathermap.org/data/2.5/weather?zip=${zipcode},US&appid=2236f63a213497e7540ce550e394c5c0&units=imperial`
-    )
-      .then((res) => res.json())
-      .then((data) => setCurrentWeather(data));
-  }, [selectedDate]);
+    if (zipcode.toString().length === 5)
+      fetch(
+        `https://api.openweathermap.org/data/2.5/weather?zip=${zipcode},US&appid=2236f63a213497e7540ce550e394c5c0&units=imperial`
+      )
+        .then((res) => res.json())
+        .then((data) => setCurrentWeather(data));
+  }, [zipcode]);
 
   return (
     <div className="App">

@@ -3,6 +3,8 @@ import { SelectedDateType } from "./App";
 import { WeatherConfigurationRoot } from "./WeatherConfig";
 import wind from "./images/wind.png";
 import humidity from "./images/humidity.png";
+import { FutureWeatherBackground } from "./FutureWeatherBackground";
+import { FindWeatherIcon } from "./FindWeatherImage";
 
 export type WeatherConfiguration = {
   weather?: WeatherConfigurationRoot;
@@ -29,11 +31,18 @@ export default function Future({
   };
 
   return (
-    <main className="w-screen h-screen">
+    <main className="w-screen h-screen text-gray-50">
       <div role="container" className="flex flex-col">
         {filterWeatherData()?.map((data) => {
+          const weatherDescription = data.weather[0].id;
+          const DateSelected = selectedDate!.dateSelected;
           return (
-            <body className="w-96 h-44 flex flex-row flex-wrap self-center justify-between rounded-xl shadow-md">
+            <body
+              className={FutureWeatherBackground({
+                DateSelected,
+                weatherDescription,
+              })}
+            >
               <main className="flex flex-row justify-between ml-1 w-7/12 h-full items-end ">
                 <section className="mb-5 flex flex-col">
                   <div>{data.weather[0].description}</div>
@@ -52,7 +61,12 @@ export default function Future({
                   </div>
                 </section>
               </main>
-              <main className="w-1/3">Background image here</main>
+              <main className="w-1/3 flex flex-row justify-end items-start">
+                <img
+                  className="h-24 w-24"
+                  src={FindWeatherIcon({ DateSelected, weatherDescription })}
+                />
+              </main>
             </body>
           );
         })}
