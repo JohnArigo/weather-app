@@ -16,6 +16,8 @@ export default function Future({
   selectedDate,
 }: WeatherConfiguration) {
   const miliDate = selectedDate?.dateSelected.getTime();
+  const dawn = new Date(weather?.city.sunrise! * 1000);
+  const sunset = new Date(weather?.city.sunset! * 1000);
 
   const filterWeatherData = () => {
     return weather?.list?.filter((data) => {
@@ -41,6 +43,8 @@ export default function Future({
               className={FutureWeatherBackground({
                 DateSelected,
                 weatherDescription,
+                dawn,
+                sunset,
               })}
             >
               <main className="flex flex-row justify-between ml-1 w-7/12 h-full items-end ">
@@ -53,11 +57,11 @@ export default function Future({
                 <section className="flex flex-row mb-5">
                   <div className="flex flex-row items-center">
                     {Math.round(data.main.humidity)}
-                    <img src={humidity} className="w-3 h-3" />
+                    <img src={humidity} className="w-3 h-3 ml-1" />
                   </div>
                   <div className="ml-2 flex flex-row items-center">
                     {Math.round(data.wind.speed)}
-                    <img src={wind} className="w-3 h-3" />
+                    <img src={wind} className="w-3 h-3 ml-1" />
                   </div>
                 </section>
               </main>

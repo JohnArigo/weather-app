@@ -18,7 +18,7 @@ function App() {
   const dated = new Date();
   const dateOne = dated.setDate(dated.getDate() + 1);
   const initialDate = new Date(dateOne);
-  console.log(initialDate);
+
   const [selectedDate, setSelectedDate] = useState<SelectedDateType>({
     dateSelected: initialDate,
     currentDateCheck: false,

@@ -1,16 +1,23 @@
 export type FindWeatherType = {
   DateSelected?: Date;
   weatherDescription?: number;
+  dawn?: Date;
+  sunset?: Date;
 };
 
 export const FutureWeatherBackground = ({
   DateSelected,
   weatherDescription,
+  dawn,
+  sunset,
 }: FindWeatherType) => {
   const backgroundString =
     "w-96 h-44 flex flex-row flex-wrap self-center justify-between rounded-xl shadow-md";
+  const dataDawn = dawn!.getHours();
+  const dataSunset = sunset!.getHours();
   const dateHour = DateSelected!.getHours();
-  if (dateHour >= 17 || dateHour < 6) {
+
+  if (dateHour >= dataSunset || dateHour < dataDawn) {
     if (weatherDescription === 800) {
       return `bg-gradient-to-tr from-indigo-800 to-indigo-50 ${backgroundString}`;
     } else if (
