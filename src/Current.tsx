@@ -20,6 +20,11 @@ export default function Current({
   const DateSelected = new Date();
   return (
     <body role="container" className="mt-10 flex flex-col text-gray-50">
+      <div className="w-full text-center text-xl text-zinc-800">
+        {currentWeather?.name === undefined
+          ? "Enter Zipcode"
+          : currentWeather?.name}
+      </div>
       <body className={WeatherBackground({ DateSelected, weatherDescription })}>
         <main className="flex flex-row justify-between ml-1 w-7/12 h-full items-end ">
           <section className="flex flex-col mt-4">
